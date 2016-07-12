@@ -23,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private CursorAdapter mCursorAdapter;
     private BakerySQLiteOpenHelper mHelper;
 
+    Intent mSearchIntent;
     Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BakerySQLiteOpenHelper db = BakerySQLiteOpenHelper.getInstance(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Takes care of the initial intent in the OnCreate and executes a cursor search if the intent is a search.
         handleIntent(getIntent());
-/*
+
         // Create database and table, pastry.  Should only run once, then commented out.
-        SQLiteDatabase db;
+        SQLiteDatabase db2;
 
-        db = openOrCreateDatabase("Bakery.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db2 = openOrCreateDatabase("Bakery.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
-        db.setVersion(1);
-        db.setLocale(Locale.getDefault());
+        db2.setVersion(1);
+        db2.setLocale(Locale.getDefault());
 
         Integer[] id = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
         String[] name = new String[]{"Fruit Cake", "Green Tea Mousse Cake", "Honey Dew Roll Cake", "Sponge Cake", "Curry Beef Pastry Puff", "Hot Dog Bun", "Hot Dog Scallion Bun", "Roast Pork Bun", "Roast Pork Pastry Puff", "Coconut Cream Bun", "Custard Bun", "Egg Tart", "Portuguese Egg Custard Tart", "Pineapple Bun", "Red Lotus Pastry Puff", "Sesame Ball", "Wife Cake / Melon Cake"};
@@ -96,16 +99,16 @@ public class MainActivity extends AppCompatActivity {
                 "A flakey outside filled with a sweet, nutty and rich, lotus bean paste almost brings to mind peanut butter but without the gooey stickiness.",
                 "It has a crispy exterior that tastes of sesame seeds and a chewy layer of glutinous rice dough, and a well-filled core of red bean paste.",
                 "An archetypical Chinese sweet: light on sugar but big on chewy texture. This cookie-shaped cake is filled with a subtle, sticky-chewy winter melon filling that has a taste and texture reminiscent of mashed sticky rice with some notes of sweet summer squash."};
-        Integer[] picture_resource_id = new Integer[]{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
+        String[] picture_resource_id = new String[]{"fruit_cake","green_tea_mousse_cake","honey_dew_roll","sponge_cake","curry_beef_pastry_puff","hot_dog_bun","hot_dog_scallion_bun","roast_pork_bun","roast_pork_pastry_puff","coconut_cream_bun","custard_bun","egg_tart","portuguese_egg_custard_tart","pineapple_bun","red_lotus_pastry_puff","sesame_ball","wife_cake"};
         Integer[] calories = new Integer[]{4960, 1680, 1032, 103, 150, 218, 250, 207, 150, 356, 210, 178, 250, 340, 220, 132, 397};
         String[] price = new String[]{"18.99", "15.99", "6.00", "1.00", "1.75", "1.50", "1.50", "1.25", "1.30", "1.50", "1.20", "1.25", "1.25", "1.10", "0.95", "1.00", "1.50"};
         String[] category = new String[]{"Cake", "Cake", "Cake", "Cake", "Savory", "Savory", "Savory", "Savory", "Savory", "Sweet", "Sweet", "Sweet", "Sweet", "Sweet", "Sweet", "Sweet", "Sweet"};
         Integer[] in_stock = new Integer[]{0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1};
-        db.execSQL("CREATE TABLE IF NOT EXISTS pastry (_id integer, name text, description text, picture_resource_id integer, calories integer, price text, category text, in_stock integer);");
+        db2.execSQL("CREATE TABLE IF NOT EXISTS pastry (_id integer, name text, description text, picture_resource_id text, calories integer, price text, category text, in_stock integer);");
         for (int i = 0; i < name.length; i++) {
-            db.execSQL("INSERT INTO pastry Values (" + id[i] + ",'" + name[i] + "', '" + description[i] + "'," + picture_resource_id[i] + "," + calories[i] + ",'" + price[i] + "','" + category[i] + "'," + in_stock[i] + ");");
+            db2.execSQL("INSERT INTO pastry Values (" + id[i] + ",'" + name[i] + "', '" + description[i] + "','" + picture_resource_id[i] + "'," + calories[i] + ",'" + price[i] + "','" + category[i] + "'," + in_stock[i] + ");");
         }
-*/
+
     }
 
     // This is called since launchMode is set to "singleTop" in the AndroidManifest.xml file.
@@ -136,13 +139,19 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             // Reassign cursor by rerunning the query using the search string.
-            cursor = mHelper.searchMenuList(query);
+            mSearchIntent = new Intent(MainActivity.this, SearchDetailActivity.class);
+            mSearchIntent.putExtra("SEARCH_QUERY", query);
+            startActivity(mSearchIntent);
+
+            //cursor = mHelper.searchMenuList(query);
+            // send query to fragment
+            // have fragment search
 
             // Closes the current cursor from getShoppingList and uses the new cursor called
             // from searchShoppingList.
-            mCursorAdapter.changeCursor(cursor);
+            //mCursorAdapter.changeCursor(cursor);
             // The view will refresh since the data from the new cursor has changed.
-            mCursorAdapter.notifyDataSetChanged();
+            //mCursorAdapter.notifyDataSetChanged();
         }
     }
 

@@ -48,6 +48,8 @@ public class MenuFragment extends Fragment {
 //        final DBAssetHelper dbSetup = new DBAssetHelper(getActivity());
 //        dbSetup.getReadableDatabase();
 
+
+
         cursor = db.getMenuList();
         mMenuListView = (ListView) menuFragment.findViewById(R.id.menu_list_view);
 //        mHelper = new BakerySQLiteOpenHelper(getActivity());
@@ -78,12 +80,16 @@ public class MenuFragment extends Fragment {
                 // I had to use lowercase for the column names from the bakery_list table.
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 String description = cursor.getString(cursor.getColumnIndex("description"));
+                String picture_resource_id = cursor.getString(cursor.getColumnIndex("picture_resource_id"));
                 String price = cursor.getString(cursor.getColumnIndex("price"));
                 String category = cursor.getString(cursor.getColumnIndex("category"));
+                int in_stock = cursor.getInt(cursor.getColumnIndex("in_stock"));
                 mDetailIntent.putExtra("NAME", name);
                 mDetailIntent.putExtra("DESCRIPTION", description);
+                mDetailIntent.putExtra("PICTURE_RESOURCE_ID", picture_resource_id);
                 mDetailIntent.putExtra("PRICE", price);
                 mDetailIntent.putExtra("CATEGORY", category);
+                mDetailIntent.putExtra("IN_STOCK", in_stock);
                 startActivity(mDetailIntent);
             }
         };

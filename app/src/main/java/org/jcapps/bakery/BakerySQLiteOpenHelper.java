@@ -66,7 +66,7 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
                     P_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     P_COL_ITEM_NAME + " TEXT, " +
                     P_COL_ITEM_DESCRIPTION + " TEXT, " +
-                    P_COL_PIC_RESOURCE_ID + " INTEGER, " +
+                    P_COL_PIC_RESOURCE_ID + " TEXT, " +
                     P_COL_CALORIES + " INTEGER, " +
                     P_COL_ITEM_PRICE + " TEXT, " +
                     P_COL_ITEM_CATEGORY + " TEXT, " +
@@ -143,12 +143,12 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
-                PASTRY_COLUMNS, // b. column names
+                null, // b. column names
                 null, // c. selections
                 null, // d. selections args
                 null, // e. group by
                 null, // f. having
-                P_COL_ITEM_CATEGORY + "," + P_COL_ITEM_NAME, // g. order by
+                null,  // g. order by
                 null); // h. limit
 
         return cursor;
@@ -161,6 +161,8 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
         //                         WHERE NAME LIKE "%<query string>%
         // You are selecting all records where the NAME column contains the query string anywhere
         // within the field.
+        //String someStringVars = "SELECT * FROM TABLE_NAME WHERE " + " _id = 1";
+        //Cursor c = db.rawQuery(someStringVars, null);
         Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
                 PASTRY_COLUMNS, // b. column names
 //                COL_ITEM_NAME + " LIKE ?", // c. selections

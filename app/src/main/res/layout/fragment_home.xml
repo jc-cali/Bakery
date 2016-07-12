@@ -4,13 +4,23 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Chiu Quan Bakery"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal|top"
+        android:background="#a5400d"/>
+
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:id="@+id/imagehome"/>
+        android:layout_height="530dp"
+        android:id="@+id/imagehome"
+        android:layout_marginTop="28dp"
+        />
 
-<!--        android:adjustViewBounds="true"
-        android:layout_alignParentBottom="true"/>
--->
+    <!--        android:adjustViewBounds="true"
+            android:layout_alignParentBottom="true"/>
+    -->
 </FrameLayout>

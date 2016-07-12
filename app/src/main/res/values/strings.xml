@@ -7,4 +7,5 @@
     <string name="about_us">About Us</string>
     <string name="menu">Menu</string>
     <string name="locations">Locations</string>
+    <string name="search_hint">Search for a menu item</string>
 </resources>

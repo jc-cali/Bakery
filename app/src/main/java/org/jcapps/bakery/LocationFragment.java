@@ -2,6 +2,7 @@ package org.jcapps.bakery;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +17,14 @@ import android.widget.TextView;
  * A simple {@link Fragment} subclass.
  */
 public class LocationFragment extends Fragment implements View.OnClickListener{
-    TextView mText1;
-    TextView mText2;
-    TextView mText3;
+//    TextView mText1;
+//    TextView mText2;
+//    TextView mText3;
+//    TextView mText4;
     String text1;
     String text2;
     String text3;
+    String text4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
                 "Phone: (312)225-6608\n" +
                 "Hours: 7am - 9pm (Daily)";
         mText1.setText(text1);
+        mText1.setTextColor(Color.BLUE);
         mText1.setOnClickListener(this);
 
         TextView mText2 = (TextView) locationFragment.findViewById(R.id.txtUptown);
@@ -42,6 +46,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
                 "Phone: (773)907-8888\n" +
                 "Hours: 7am – 7:30pm (Daily)";
         mText2.setText(text2);
+        mText2.setTextColor(Color.BLUE);
         mText2.setOnClickListener(this);
 
         TextView mText3 = (TextView) locationFragment.findViewById(R.id.txtMcKinleyPark);
@@ -51,7 +56,12 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
                 "Phone: (773)376-3839\n" +
                 "Hours: 10am – 9pm (Daily)";
         mText3.setText(text3);
+        mText3.setTextColor(Color.BLUE);
         mText3.setOnClickListener(this);
+
+        TextView mText4 = (TextView) locationFragment.findViewById(R.id.txtchoose);
+        text4 = "Choose location for directions";
+        mText4.setText(text4);
 
         return locationFragment;
 

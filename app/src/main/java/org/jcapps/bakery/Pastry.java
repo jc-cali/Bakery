@@ -1,9 +1,11 @@
 package org.jcapps.bakery;
 
+import java.io.Serializable;
+
 /**
  * Created by JC on 7/11/16.
  */
-public class Pastry {
+public class Pastry implements Serializable{
 
     private String id;
     private String name;
@@ -13,6 +15,7 @@ public class Pastry {
     private double price;
     private String category;
     private int in_stock;
+    private int quantity;
 
 
     public Pastry(String id, String name, String description, int picture_resource_id, int calories, double price, String category, int in_stock) {
@@ -24,6 +27,12 @@ public class Pastry {
         this.price = price;
         this.category = category;
         this.in_stock = in_stock;
+    }
+
+    public Pastry(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public String getId() {
@@ -58,17 +67,15 @@ public class Pastry {
         return in_stock;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     public String toString() {
-        return "Pastry{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", picture_resource_id=" + picture_resource_id +
-                ", calories=" + calories +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                ", in_stock=" + in_stock +
-                ")";
+        return " Quantity: " + quantity + "\n" +
+                " Name: " + name + "\n" +
+                " Price: $ " + String.format("%.2f", price);
     }
+
 }

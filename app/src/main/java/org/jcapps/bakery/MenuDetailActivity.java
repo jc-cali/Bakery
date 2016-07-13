@@ -1,34 +1,54 @@
 package org.jcapps.bakery;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MenuDetailActivity extends AppCompatActivity {
+    private ListView mCartListView;
+    private CursorAdapter mCursorAdapter;
+
     TextView mTxtName;
     TextView mTxtCategory;
     TextView mTxtDescription;
     TextView mTxtInStock;
     TextView mTxtPrice;
     ImageView mImgItem;
+    Spinner mQuantity;
+    Button mBtnCart;
     Integer availabilityVal;
     String imagename;
     String moneyString;
+
+    Intent mCartIntent;
+    Cursor cursor;
+    AdapterView.OnItemClickListener mClickListener;
+
+    static ArrayList<Pastry> cart = new ArrayList<>();
 
 //    public MenuDetailActivity() {
         // Required empty public constructor
@@ -38,6 +58,15 @@ public class MenuDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_detail);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+        // To display the logo in the toolbar.
+//        getSupportActionBar().setLogo(R.drawable.logo3);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setIcon(R.drawable.logo3);
+
+        //cart = ShoppingCart.getInstance();
 
         // Inflate the layout for this fragment
         mTxtName = (TextView) findViewById(R.id.txt_name);
@@ -46,18 +75,20 @@ public class MenuDetailActivity extends AppCompatActivity {
         mTxtDescription = (TextView) findViewById(R.id.txt_description);
         mTxtInStock = (TextView) findViewById(R.id.txt_instock);
         mTxtPrice = (TextView) findViewById(R.id.txt_price);
+        mQuantity = (Spinner) findViewById(R.id.spin_quantity);
+
 
         Intent listIntent = getIntent();
-        String name = listIntent.getStringExtra("NAME");
+        final String name = listIntent.getStringExtra("NAME");
         String category = listIntent.getStringExtra("CATEGORY");
         String picture_resource_id = listIntent.getStringExtra("PICTURE_RESOURCE_ID");
         String description = listIntent.getStringExtra("DESCRIPTION");
 
         int in_stock = listIntent.getIntExtra("IN_STOCK",0);
         //int available = Integer.parseInt(in_stock);
-        boolean instock = (in_stock != 0);
+        final boolean instock = (in_stock != 0);
 
-        String price = listIntent.getStringExtra("PRICE");
+        final String price = listIntent.getStringExtra("PRICE");
         double pricedouble = Double.parseDouble(price);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         String moneyString = formatter.format(pricedouble);
@@ -70,8 +101,8 @@ public class MenuDetailActivity extends AppCompatActivity {
         mTxtPrice.setText(moneyString);
         if (instock) {
             mTxtInStock.setText("In Stock");
-            mTxtInStock.setTextColor(Color.GREEN);
-//            mTxtInStock.setTextColor(Color.parseColor("#4CAF50"));
+//            mTxtInStock.setTextColor(Color.GREEN);
+            mTxtInStock.setTextColor(Color.parseColor("#8BC34A"));
         } else {
             mTxtInStock.setText("Out of Stock");
             mTxtInStock.setTextColor(Color.RED);
@@ -151,6 +182,40 @@ public class MenuDetailActivity extends AppCompatActivity {
                 default:
                     break;
             }
+
+        //Here we declare our add to cart button
+        Button mBtnCart = (Button) findViewById(R.id.btn_cart);
+        assert mBtnCart != null;
+        mBtnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (instock) {
+                    // the name of the receiving activity is declared in the Intent Constructor
+                    Intent mCartIntent = new Intent(MenuDetailActivity.this, CartActivity.class);
+                    //mCartIntent.putStringArrayListExtra("quantity",cart.quantity);
+                    int quantity = Integer.parseInt(String.valueOf(mQuantity.getSelectedItem()));
+                    Pastry item = new Pastry(name, Double.valueOf(price), quantity);
+                    if (item != null) {
+                        cart.add(item);
+                    }
+                    Toast.makeText(getApplicationContext(),
+                            "Added to Cart", Toast.LENGTH_SHORT).show();
+
+                    mCartIntent.putExtra("cart", cart);
+
+                    // cart.add("Quantity: " + cart.quantity.add(String.valueOf(mQuantity.getSelectedItem())) + " Name: " + cart.name.add(name) + " Price: $"  + cart.price.add(price));
+
+                    startActivity(mCartIntent);
+
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Out of Stock", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+        });
+
     }
 
 }

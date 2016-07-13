@@ -34,6 +34,11 @@ public class SearchDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // To display the logo in the toolbar.
+        getSupportActionBar().setLogo(R.drawable.logo3);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.logo3);
+
         BakerySQLiteOpenHelper db = BakerySQLiteOpenHelper.getInstance(this);
         mMenuListView = (ListView) findViewById(R.id.lst_search);
 
@@ -54,7 +59,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                 TextView txt = (TextView) view.findViewById(android.R.id.text1);
                 // String rowData = cursor.getString(cursor.getColumnIndex("name"));
                 String rowData = cursor.getString(cursor.getColumnIndex("name")) +
-                        " - " + cursor.getString(cursor.getColumnIndex("category")) +
+//                        " - " + cursor.getString(cursor.getColumnIndex("category")) +
                         " - " + cursor.getString(cursor.getColumnIndex("price"));
                 txt.setText(rowData);
             }

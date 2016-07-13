@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Takes care of the initial intent in the OnCreate and executes a cursor search if the intent is a search.
         handleIntent(getIntent());
-
+/*
         // Create database and table, pastry.  Should only run once, then commented out.
         SQLiteDatabase db2;
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < name.length; i++) {
             db2.execSQL("INSERT INTO pastry Values (" + id[i] + ",'" + name[i] + "', '" + description[i] + "','" + picture_resource_id[i] + "'," + calories[i] + ",'" + price[i] + "','" + category[i] + "'," + in_stock[i] + ");");
         }
-
+*/
     }
 
     // This is called since launchMode is set to "singleTop" in the AndroidManifest.xml file.

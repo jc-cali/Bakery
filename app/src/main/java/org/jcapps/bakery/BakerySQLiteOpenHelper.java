@@ -148,7 +148,7 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
                 null, // d. selections args
                 null, // e. group by
                 null, // f. having
-                null,  // g. order by
+                P_COL_ITEM_NAME,  // g. order by
                 null); // h. limit
 
         return cursor;

@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 
+import java.text.NumberFormat;
+
 //import org.jcapps.bakery.setup.DBAssetHelper;
 
 
@@ -65,9 +67,15 @@ public class MenuFragment extends Fragment {
             public void bindView(View view, Context context, Cursor cursor) {
                 TextView txt = (TextView) view.findViewById(android.R.id.text1);
                // String rowData = cursor.getString(cursor.getColumnIndex("name"));
+
+                double pricedouble = Double.parseDouble(cursor.getString(cursor.getColumnIndex("price")));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                String moneyString = formatter.format(pricedouble);
+
                 String rowData = cursor.getString(cursor.getColumnIndex("name")) +
-                        " - " + cursor.getString(cursor.getColumnIndex("category")) +
-                        " - " + cursor.getString(cursor.getColumnIndex("price"));
+//                        " - " + cursor.getString(cursor.getColumnIndex("category")) +
+//                        " - " + cursor.getString(cursor.getColumnIndex("price"));
+                        " - " + moneyString;
                 txt.setText(rowData);
             }
         };

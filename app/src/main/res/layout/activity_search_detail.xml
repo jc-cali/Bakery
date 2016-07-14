@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:text="Check in Stock"
         android:id="@+id/btn_in_stock"
-        android:onClick="clickButton"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true"/>
 
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:text="Display Cakes"
         android:id="@+id/btn_cakes"
-        android:onClick="clickButton"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentEnd="true"/>
 
@@ -48,7 +46,6 @@
         android:layout_height="wrap_content"
         android:text="Display Sweets"
         android:id="@+id/btn_sweets"
-        android:onClick="clickButton"
         android:layout_below="@+id/btn_in_stock"
         android:layout_alignParentStart="true"/>
 
@@ -57,7 +54,6 @@
         android:layout_height="wrap_content"
         android:text="Display Savory"
         android:id="@+id/btn_savory"
-        android:onClick="clickButton"
         android:layout_below="@+id/btn_cakes"
         android:layout_alignParentEnd="true"/>
 

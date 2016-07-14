@@ -51,13 +51,48 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         String query = getIntent().getExtras().getString("SEARCH_QUERY");
         cursor = db.searchMenuList(query);
-//        cursor = db.getMenuList();
-//        mHelper = new BakerySQLiteOpenHelper(getActivity());
 
-        //View.OnClickListener handler = new View.OnClickListener() {
-        //    public void onClick(View v) {
-//            }
-//        };
+        // Capture our button from layout
+        Button mInStock = (Button) findViewById(R.id.btn_in_stock);
+        Button mCakes = (Button) findViewById(R.id.btn_cakes);
+        Button mSweets = (Button) findViewById(R.id.btn_sweets);
+        Button mSavory = (Button) findViewById(R.id.btn_savory);
+
+        // Register the onClick listener with the implementation above
+        mInStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor = db.searchInStock("1");
+                mCursorAdapter.changeCursor(cursor);
+                mCursorAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mCakes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor = db.searchCakes("Cake");
+                mCursorAdapter.changeCursor(cursor);
+                mCursorAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mSweets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor = db.searchSweets("Sweet");
+                mCursorAdapter.changeCursor(cursor);
+                mCursorAdapter.notifyDataSetChanged();
+            }
+        });
+        mSavory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor = db.searchSavory("Savory");
+                mCursorAdapter.changeCursor(cursor);
+                mCursorAdapter.notifyDataSetChanged();
+            }
+        });
 
         //  Use the bindView to combine the NAME and TYPE columns in my list view.
         mCursorAdapter = new CursorAdapter(this, cursor, 0) {
@@ -142,29 +177,6 @@ public class SearchDetailActivity extends AppCompatActivity {
             mCursorAdapter.changeCursor(cursor);
             // The view will refresh since the data from the new cursor has changed.
             mCursorAdapter.notifyDataSetChanged();
-        }
-    }
-    private void clickButton(View v) {
-        BakerySQLiteOpenHelper db = BakerySQLiteOpenHelper.getInstance(this);
-//        mInStock = (Button) findViewById(R.id.btn_in_stock);
-//        mCakes = (Button) findViewById(R.id.btn_cakes);
-//        mSweets = (Button) findViewById(R.id.btn_sweets);
-//        mSavory = (Button) findViewById(R.id.btn_savory);
-        switch (v.getId()) {
-            case R.id.btn_in_stock:
-                cursor = db.searchInStock();
-                break;
-            case R.id.btn_cakes:
-                cursor = db.searchCakes();
-                break;
-            case R.id.btn_sweets:
-                cursor = db.searchSweets();
-                break;
-            case R.id.btn_savory:
-                cursor = db.searchSavory();
-                break;
-            default:
-                break;
         }
     }
 

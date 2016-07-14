@@ -179,13 +179,45 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
-    public Cursor searchInStock(){
+    public Cursor searchInStock(String query){
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
                 PASTRY_COLUMNS, // b. column names
-                P_COL_ITEM_AVAILABILITY, // c. selections
-                new String[]{"1"}, // d. selections args
+                P_COL_ITEM_AVAILABILITY + " = ?", // c. selections
+                new String[]{query}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+
+  //      Cursor cursor = db.rawQuery("select * from pastry where in_stock = ?",new String[]{query});
+        return cursor;
+    }
+
+    public Cursor searchCakes(String query){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_CATEGORY + " = ?", // c. selections
+                new String[]{query}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+//              Cursor cursor = db.rawQuery("select * from pastry where category = ?",new String[]{query});
+
+        return cursor;
+    }
+
+    public Cursor searchSweets(String query){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_CATEGORY + " = ?", // c. selections
+                new String[]{query}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 P_COL_ITEM_NAME, // g. order by
@@ -194,43 +226,13 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
-    public Cursor searchCakes(){
+    public Cursor searchSavory(String query){
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
                 PASTRY_COLUMNS, // b. column names
-                P_COL_ITEM_CATEGORY, // c. selections
-                new String[]{"CAKE"}, // d. selections args
-                null, // e. group by
-                null, // f. having
-                P_COL_ITEM_NAME, // g. order by
-                null); // h. limit
-
-        return cursor;
-    }
-
-    public Cursor searchSweets(){
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
-                PASTRY_COLUMNS, // b. column names
-                P_COL_ITEM_CATEGORY, // c. selections
-                new String[]{"SWEET"}, // d. selections args
-                null, // e. group by
-                null, // f. having
-                P_COL_ITEM_NAME, // g. order by
-                null); // h. limit
-
-        return cursor;
-    }
-
-    public Cursor searchSavory(){
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
-                PASTRY_COLUMNS, // b. column names
-                P_COL_ITEM_CATEGORY, // c. selections
-                new String[]{"SAVORY"}, // d. selections args
+                P_COL_ITEM_CATEGORY + " = ?", // c. selections
+                new String[]{query}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 P_COL_ITEM_NAME, // g. order by

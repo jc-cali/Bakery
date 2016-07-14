@@ -172,11 +172,73 @@ public class BakerySQLiteOpenHelper extends SQLiteOpenHelper{
                 new String[]{"%"+query+"%","%"+query+"%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
-                P_COL_ITEM_CATEGORY + "," + P_COL_ITEM_NAME, // g. order by
+                P_COL_ITEM_NAME, // g. order by
+//                P_COL_ITEM_CATEGORY + "," + P_COL_ITEM_NAME, // g. order by
                 null); // h. limit
 
         return cursor;
     }
+
+    public Cursor searchInStock(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_AVAILABILITY, // c. selections
+                new String[]{"1"}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+
+        return cursor;
+    }
+
+    public Cursor searchCakes(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_CATEGORY, // c. selections
+                new String[]{"CAKE"}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+
+        return cursor;
+    }
+
+    public Cursor searchSweets(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_CATEGORY, // c. selections
+                new String[]{"SWEET"}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+
+        return cursor;
+    }
+
+    public Cursor searchSavory(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(PASTRY_LIST_TABLE_NAME, // a. table
+                PASTRY_COLUMNS, // b. column names
+                P_COL_ITEM_CATEGORY, // c. selections
+                new String[]{"SAVORY"}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                P_COL_ITEM_NAME, // g. order by
+                null); // h. limit
+
+        return cursor;
+    }
+
 
     //Add new user record
     public long addUser(String name, String address1, String address2, String city, String state, String zip, String email){

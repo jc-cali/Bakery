@@ -48,15 +48,16 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         final BakerySQLiteOpenHelper db = BakerySQLiteOpenHelper.getInstance(this);
         mMenuListView = (ListView) findViewById(R.id.lst_search);
-        mInStock = (Button) findViewById(R.id.btn_in_stock);
-        mCakes = (Button) findViewById(R.id.btn_cakes);
-        mSweets = (Button) findViewById(R.id.btn_sweets);
-        mSavory = (Button) findViewById(R.id.btn_savory);
 
         String query = getIntent().getExtras().getString("SEARCH_QUERY");
         cursor = db.searchMenuList(query);
 //        cursor = db.getMenuList();
 //        mHelper = new BakerySQLiteOpenHelper(getActivity());
+
+        //View.OnClickListener handler = new View.OnClickListener() {
+        //    public void onClick(View v) {
+//            }
+//        };
 
         //  Use the bindView to combine the NAME and TYPE columns in my list view.
         mCursorAdapter = new CursorAdapter(this, cursor, 0) {
@@ -77,6 +78,7 @@ public class SearchDetailActivity extends AppCompatActivity {
         };
 
         handleIntent(getIntent());
+
         mClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,60 +104,6 @@ public class SearchDetailActivity extends AppCompatActivity {
         mMenuListView.setOnItemClickListener(mClickListener);
         mMenuListView.setAdapter(mCursorAdapter);
 
-        //Here we search for in stock items from in stock button
-//        Button mInStock = (Button) findViewById(R.id.btn_in_stock);
-//        mInStock.setOnClickListener(this); // calling onClick() method
-//
-//        Button mCakes = (Button) findViewById(R.id.btn_cakes);
-//        mCakes.setOnClickListener(this);
-//
-//        Button mSweets = (Button) findViewById(R.id.btn_sweets);
-//        mSweets.setOnClickListener(this);
-//
-//        Button mSavory = (Button) findViewById(R.id.btn_savory);
-//        mSavory.setOnClickListener(this);
-//
-//        assert mInStock != null;
-//        mInStock.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View.OnClickListener v) {
-//
-//                switch (v.getId()) {
-//
-//                    case R.id.btn_in_stock:
-//                        cursor = db.searchInStock();
-//                        break;
-//                    case R.id.btn_cakes:
-//                        cursor = db.searchCakes();
-//                        break;
-//                    case R.id.btn_sweets:
-//                        cursor = db.searchSweets();
-//                        break;
-//                    case R.id.btn_savory:
-//                        cursor = db.searchSavory();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                //  Use the bindView to combine the NAME and TYPE columns in my list view.
-//                mCursorAdapter = new CursorAdapter(SearchDetailActivity.this, cursor, 0) {
-//                    @Override
-//                    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-//                        return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,
-//                                parent, false);
-//                    }
-//
-//                    @Override
-//                    public void bindView(View view, Context context, Cursor cursor) {
-//                        TextView txt = (TextView) view.findViewById(android.R.id.text1);
-//                        String rowData = cursor.getString(cursor.getColumnIndex("name")) +
-//                                " - " + cursor.getString(cursor.getColumnIndex("price"));
-//                        txt.setText(rowData);
-//                    }
-//                };
-//
-//            }
-//        });
     }
 
     protected void onNewIntent(Intent intent) {
@@ -194,6 +142,29 @@ public class SearchDetailActivity extends AppCompatActivity {
             mCursorAdapter.changeCursor(cursor);
             // The view will refresh since the data from the new cursor has changed.
             mCursorAdapter.notifyDataSetChanged();
+        }
+    }
+    private void clickButton(View v) {
+        BakerySQLiteOpenHelper db = BakerySQLiteOpenHelper.getInstance(this);
+//        mInStock = (Button) findViewById(R.id.btn_in_stock);
+//        mCakes = (Button) findViewById(R.id.btn_cakes);
+//        mSweets = (Button) findViewById(R.id.btn_sweets);
+//        mSavory = (Button) findViewById(R.id.btn_savory);
+        switch (v.getId()) {
+            case R.id.btn_in_stock:
+                cursor = db.searchInStock();
+                break;
+            case R.id.btn_cakes:
+                cursor = db.searchCakes();
+                break;
+            case R.id.btn_sweets:
+                cursor = db.searchSweets();
+                break;
+            case R.id.btn_savory:
+                cursor = db.searchSavory();
+                break;
+            default:
+                break;
         }
     }
 
